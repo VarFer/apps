@@ -192,7 +192,7 @@ th {
 }
 
 #horaCiudad {
-  font-size: 1,5rem;
+  font-size: 1, 5rem;
   font-weight: bold;
 }
 
@@ -200,6 +200,7 @@ th {
   color: inherit !important;
   /* Hereda el color del texto del título */
 }
+
 #countdown {
   font-size: 2rem;
   font-weight: bold;
@@ -209,13 +210,16 @@ th {
   border-radius: 5px;
   margin-top: 10px;
 }
+
 /* Fondo del visor donde flotan los globos */
 /* Estilo para los globos */
 .balloon {
   position: absolute;
   bottom: -50px;
-  width: 60px;  /* Tamaño ajustable */
-  height: 80px;  /* Tamaño ajustable */
+  width: 60px;
+  /* Tamaño ajustable */
+  height: 80px;
+  /* Tamaño ajustable */
   background-color: #ff6347;
   border-radius: 50%;
   display: flex;
@@ -231,18 +235,56 @@ th {
 
 /* Estilo para los globos pares */
 .balloon.even {
-  background-color: #4caf50;  /* Verde para números pares */
+  background-color: #4caf50;
+  /* Verde para números pares */
 }
 
 /* Estilo para los globos impares */
 .balloon.odd {
-  background-color: #2196f3;  /* Azul para números impares */
+  background-color: #2196f3;
+  /* Azul para números impares */
 }
 
 /* Animación de flotación de los globos */
 @keyframes float {
-  0% { bottom: -50px; }
-  50% { bottom: 50%; }
-  100% { bottom: -50px; }
+  0% {
+    bottom: -50px;
+  }
+
+  50% {
+    bottom: 50%;
+  }
+
+  100% {
+    bottom: -50px;
+  }
 }
 
+.scroll-title-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  height: 60px;
+  /* Ajusta según tu diseño */
+}
+
+.scroll-title {
+  display: inline-block;
+  white-space: nowrap;
+  position: absolute;
+  animation: scrollLeft 10s linear infinite;
+  font-size: 2.5rem;
+  /* Ajusta si quieres otro tamaño */
+  color: #ffc107;
+  /* Mantén el color original si es necesario */
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
