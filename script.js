@@ -102,36 +102,69 @@ document.getElementById("rutInput").addEventListener("keydown", function (e) {
 });
 
 // ========== 💰 PRODUCTOS Y PRESUPUESTO ========== //
+// ========== 💰 PRODUCTOS Y PRESUPUESTO ========== //
 let productos = JSON.parse(localStorage.getItem("productos")) || [];
+let productoEditando = null;
 
 function actualizarTabla() {
   const tbody = document.getElementById("productTableBody");
   tbody.innerHTML = "";
   let total = 0;
-  productos.forEach(p => {
+
+  productos.forEach((p, index) => {
     total += p.precio;
     const fila = document.createElement("tr");
-    fila.innerHTML = `<td>${p.nombre}</td><td>${p.precio}</td>`;
+    fila.innerHTML = `
+      <td>${p.nombre}</td>
+      <td>${p.precio}</td>
+      <td>
+        <button class="btn btn-sm btn-warning" onclick="editarProducto(${index})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="eliminarProducto(${index})">Eliminar</button>
+      </td>`;
     tbody.appendChild(fila);
   });
+
   document.getElementById("totalProductsAmount").textContent = total;
   const presupuesto = parseFloat(document.getElementById("budget").value) || 0;
   document.getElementById("totalAmount").textContent = total;
   document.getElementById("remainingAmount").textContent = (presupuesto - total).toFixed(2);
 }
+
 document.getElementById("productForm").addEventListener("submit", e => {
   e.preventDefault();
   const nombre = document.getElementById("productName").value;
   const precio = parseFloat(document.getElementById("productPrice").value);
-  if (nombre && !isNaN(precio)) {
+
+  if (!nombre || isNaN(precio)) return;
+
+  if (productoEditando !== null) {
+    productos[productoEditando] = { nombre, precio };
+    productoEditando = null;
+  } else {
     productos.push({ nombre, precio });
-    localStorage.setItem("productos", JSON.stringify(productos));
-    actualizarTabla();
-    e.target.reset();
   }
+
+  localStorage.setItem("productos", JSON.stringify(productos));
+  actualizarTabla();
+  e.target.reset();
 });
+
+function eliminarProducto(index) {
+  productos.splice(index, 1);
+  localStorage.setItem("productos", JSON.stringify(productos));
+  actualizarTabla();
+}
+
+function editarProducto(index) {
+  const producto = productos[index];
+  document.getElementById("productName").value = producto.nombre;
+  document.getElementById("productPrice").value = producto.precio;
+  productoEditando = index;
+}
+
 document.getElementById("budget").addEventListener("input", actualizarTabla);
 actualizarTabla();
+
 
 // ========== 📝 NOTAS ========== //
 const notes = JSON.parse(localStorage.getItem("notas")) || [];
@@ -222,7 +255,7 @@ function createBalloon() {
   const balloonNumber = Math.floor(Math.random() * 100) + 1;  // Número aleatorio entre 1 y 100
   balloon.textContent = balloonNumber;
   balloon.classList.add("balloon");
-  
+
   // Determinar si el número es par o impar y asignar clase
   if (balloonNumber % 2 === 0) {
     balloon.classList.add("even");
@@ -234,18 +267,18 @@ function createBalloon() {
   const xPos = Math.random() * (balloonArea.offsetWidth - 60);  // 60 es el ancho del globo
   balloon.style.left = `${xPos}px`;
   balloon.style.animation = "float 3s infinite ease-in-out";  // Animación de flotación
-  
+
   balloon.addEventListener("click", function () {
     // Verificar si el jugador hizo clic en el globo correcto
     if ((correctType === "par" && balloonNumber % 2 === 0) ||
-        (correctType === "impar" && balloonNumber % 2 !== 0)) {
+      (correctType === "impar" && balloonNumber % 2 !== 0)) {
       score += balloonNumber;  // Sumar el valor del globo al puntaje
       gameInfo.textContent = "¡Correcto!";
     } else {
       score -= balloonNumber;  // Restar el valor del globo al puntaje
       gameInfo.textContent = "¡Incorrecto!";
     }
-    
+
     scoreDisplay.textContent = score;  // Actualizar el puntaje
     balloon.remove();  // Eliminar el globo del área después de hacer clic
   });
@@ -257,7 +290,7 @@ function createBalloon() {
 function setCorrectType() {
   // Decidir aleatoriamente si debe ser "par" o "impar"
   correctType = Math.random() < 0.5 ? "par" : "impar";
-  
+
   if (correctType === "par") {
     gameInfo.textContent = "¡Haz clic en los globos con números pares!";
   } else {
@@ -270,3 +303,4 @@ setInterval(() => {
   setCorrectType();  // Cada vez que se genera un nuevo globo, cambia el tipo correcto
   createBalloon();
 }, 1500);  // Genera un globo cada 1.5 segundos
+
