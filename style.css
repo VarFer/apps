@@ -259,31 +259,29 @@ th {
     bottom: -50px;
   }
 }
-
 .scroll-title-wrapper {
-  overflow: hidden;
   width: 100%;
+  overflow: hidden;
   position: relative;
-  height: 60px;
-  /* Ajusta según tu diseño */
+  height: 60px; /* Ajusta según necesidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .scroll-title {
   display: inline-block;
   white-space: nowrap;
-  position: absolute;
-  animation: scrollLeft 10s linear infinite;
   font-size: 2.5rem;
-  /* Ajusta si quieres otro tamaño */
   color: #ffc107;
-  /* Mantén el color original si es necesario */
+  animation: scrollLeft 10s linear infinite;
+  will-change: transform;
 }
 
 @keyframes scrollLeft {
   0% {
     transform: translateX(100%);
   }
-
   100% {
     transform: translateX(-100%);
   }
