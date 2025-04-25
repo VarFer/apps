@@ -10,128 +10,132 @@
 </head>
 
 <body class="dark-mode">
-  <div class="scroll-title-wrapper">
-    <h1 class="scroll-title">Mysait</h1>
-  </div>
-  
-    <!-- Conversor -->
-    <div class="card p-3">
-      <h4>🔄 Conversor</h4>
-      <select id="tipoConversion" class="form-control mb-2" aria-label="Tipo de conversión">
-        <option value="metrico">📏 Métrico</option>
-        <option value="peso">⚖️ Peso</option>
-        <option value="velocidad">🚀 Velocidad</option>
-      </select>
-      <input type="number" id="inputValue" class="form-control mb-2" placeholder="Valor a convertir"
-        aria-label="Valor a convertir" />
-      <div class="d-flex justify-content-between mb-2">
-        <select id="fromUnit" class="form-control w-45" aria-label="Unidad de origen"></select>
-        <span class="text-primary align-self-center">➡️</span>
-        <select id="toUnit" class="form-control w-45" aria-label="Unidad de destino"></select>
+  <div class="container my-4">
+    <h1 class="text-center mb-4">Mysait</h1>
+    <div class="text-center mb-4">
+      <h4 id="reloj" class="text-warning"></h4>
+    </div>
+
+    <div class="grid-container">
+      <!-- Conversor -->
+      <div class="card p-3">
+        <h4>🔄 Conversor</h4>
+        <select id="tipoConversion" class="form-control mb-2" aria-label="Tipo de conversión">
+          <option value="metrico">📏 Métrico</option>
+          <option value="peso">⚖️ Peso</option>
+          <option value="velocidad">🚀 Velocidad</option>
+        </select>
+        <input type="number" id="inputValue" class="form-control mb-2" placeholder="Valor a convertir"
+          aria-label="Valor a convertir" />
+        <div class="d-flex justify-content-between mb-2">
+          <select id="fromUnit" class="form-control w-45" aria-label="Unidad de origen"></select>
+          <span class="text-primary align-self-center">➡️</span>
+          <select id="toUnit" class="form-control w-45" aria-label="Unidad de destino"></select>
+        </div>
+        <div class="alert alert-success text-center" id="result">Resultado: -</div>
       </div>
-      <div class="alert alert-success text-center" id="result">Resultado: -</div>
-    </div>
 
-    <!-- Gravedad -->
-    <div class="card p-3">
-      <h4>🌍 Gravedad</h4>
-      <input type="number" id="mass" class="form-control mb-2" placeholder="Masa (kg)" aria-label="Masa (kg)" />
-      <input type="number" id="distance" class="form-control mb-2" placeholder="Distancia (m)"
-        aria-label="Distancia (m)" />
-      <button class="btn btn-danger btn-block" onclick="calcGravedad()" aria-label="Calcular gravedad">Calcular</button>
-      <div class="alert alert-danger text-center mt-2" id="gravResult">Resultado: -</div>
-    </div>
+      <!-- Gravedad -->
+      <div class="card p-3">
+        <h4>🌍 Gravedad</h4>
+        <input type="number" id="mass" class="form-control mb-2" placeholder="Masa (kg)" aria-label="Masa (kg)" />
+        <input type="number" id="distance" class="form-control mb-2" placeholder="Distancia (m)"
+          aria-label="Distancia (m)" />
+        <button class="btn btn-danger btn-block" onclick="calcGravedad()"
+          aria-label="Calcular gravedad">Calcular</button>
+        <div class="alert alert-danger text-center mt-2" id="gravResult">Resultado: -</div>
+      </div>
 
-    <!-- Presupuesto -->
-    <div class="card p-3">
-      <h4>💰 Presupuesto</h4>
-      <input type="number" id="budget" class="form-control mb-2" placeholder="Presupuesto" aria-label="Presupuesto" />
-      <div class="alert alert-primary" id="budgetAlert">
-        Gastado: <span id="totalAmount">0</span> | Restante: <span id="remainingAmount">0</span>
+      <!-- Presupuesto -->
+      <div class="card p-3">
+        <h4>💰 Presupuesto</h4>
+        <input type="number" id="budget" class="form-control mb-2" placeholder="Presupuesto" aria-label="Presupuesto" />
+        <div class="alert alert-primary" id="budgetAlert">
+          Gastado: <span id="totalAmount">0</span> | Restante: <span id="remainingAmount">0</span>
+        </div>
+      </div>
+
+      <!-- Producto -->
+      <div class="card p-3">
+        <h4>📦 Producto</h4>
+        <form id="productForm">
+          <input type="text" id="productName" class="form-control mb-2" placeholder="Nombre" required
+            aria-label="Nombre del producto" />
+          <input type="number" id="productPrice" class="form-control mb-2" placeholder="Precio" required
+            aria-label="Precio del producto" />
+          <button type="submit" class="btn btn-success btn-block" aria-label="Añadir producto">Añadir</button>
+        </form>
+        <div class="mt-2">
+          Total: <span id="totalProductsAmount">0</span> CLP
+        </div>
+      </div>
+
+
+      <!-- Tabla productos -->
+      <div class="card p-3">
+        <h4>📝 Productos</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="productTableBody">
+            <!-- Las filas se insertan dinámicamente desde JS -->
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <!-- RUT -->
+      <div class="card p-3">
+        <h4>🔍 Validador RUT</h4>
+        <input type="text" id="rutInput" class="form-control mb-2" placeholder="Ej: 12.345.678-5"
+          aria-label="Ingrese RUT" />
+        <button class="btn btn-success btn-block" onclick="validarRUT()" aria-label="Validar RUT">Validar</button>
+        <div class="alert alert-info mt-2 text-center" id="rutResultado">Resultado: -</div>
+      </div>
+
+      <!-- Hora por ciudad -->
+      <div class="card p-3">
+        <h4>🌐 Hora por Ciudad</h4>
+        <select id="ciudad" class="form-control mb-2" aria-label="Seleccionar ciudad">
+          <option value="America/Santiago">Santiago</option>
+          <option value="America/New_York">Nueva York</option>
+          <option value="Europe/Madrid">Madrid</option>
+          <option value="Asia/Tokyo">Tokio</option>
+          <option value="Australia/Sydney">Sídney</option>
+        </select>
+        <button class="btn btn-primary btn-block" onclick="mostrarHoraPorCiudad()"
+          aria-label="Mostrar hora por ciudad">Mostrar</button>
+        <div id="horaCiudad" class="alert alert-info mt-2">Hora actual: --:--:--</div>
+      </div>
+
+      <!-- Notas -->
+      <div class="card p-3">
+        <h4>📝 Notas</h4>
+        <form id="noteForm" class="mb-2">
+          <input type="text" id="noteTitle" class="form-control mb-2" placeholder="Título" required
+            aria-label="Título de la nota" />
+          <textarea id="noteContent" class="form-control mb-2" rows="2" placeholder="Contenido" required
+            aria-label="Contenido de la nota"></textarea>
+          <button type="submit" class="btn btn-primary btn-block" aria-label="Guardar nota">Guardar</button>
+        </form>
+        <div id="notesList" class="list-group"></div>
+      </div>
+
+      <!-- Cuenta regresiva -->
+      <div class="card p-3">
+        <h4>⏰ Salida del Trabajo</h4>
+        <input type="time" id="hourInput" class="form-control mb-2" aria-label="Hora de salida" />
+        <button class="btn btn-warning btn-block" onclick="startCountdown()"
+          aria-label="Iniciar cuenta regresiva">Iniciar Cuenta Regresiva</button>
+        <div id="countdown" class="alert alert-success text-center">00:00:00</div>
       </div>
     </div>
-
-    <!-- Producto -->
-    <div class="card p-3">
-      <h4>📦 Producto</h4>
-      <form id="productForm">
-        <input type="text" id="productName" class="form-control mb-2" placeholder="Nombre" required
-          aria-label="Nombre del producto" />
-        <input type="number" id="productPrice" class="form-control mb-2" placeholder="Precio" required
-          aria-label="Precio del producto" />
-        <button type="submit" class="btn btn-success btn-block" aria-label="Añadir producto">Añadir</button>
-      </form>
-      <div class="mt-2">
-        Total: <span id="totalProductsAmount">0</span> CLP
-      </div>
-    </div>
-
-
-    <!-- Tabla productos -->
-    <div class="card p-3">
-      <h4>📝 Productos</h4>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="productTableBody">
-          <!-- Las filas se insertan dinámicamente desde JS -->
-        </tbody>
-      </table>
-    </div>
-
-
-
-    <!-- RUT -->
-    <div class="card p-3">
-      <h4>🔍 Validador RUT</h4>
-      <input type="text" id="rutInput" class="form-control mb-2" placeholder="Ej: 12.345.678-5"
-        aria-label="Ingrese RUT" />
-      <button class="btn btn-success btn-block" onclick="validarRUT()" aria-label="Validar RUT">Validar</button>
-      <div class="alert alert-info mt-2 text-center" id="rutResultado">Resultado: -</div>
-    </div>
-
-    <!-- Hora por ciudad -->
-    <div class="card p-3">
-      <h4>🌐 Hora por Ciudad</h4>
-      <select id="ciudad" class="form-control mb-2" aria-label="Seleccionar ciudad">
-        <option value="America/Santiago">Santiago</option>
-        <option value="America/New_York">Nueva York</option>
-        <option value="Europe/Madrid">Madrid</option>
-        <option value="Asia/Tokyo">Tokio</option>
-        <option value="Australia/Sydney">Sídney</option>
-      </select>
-      <button class="btn btn-primary btn-block" onclick="mostrarHoraPorCiudad()"
-        aria-label="Mostrar hora por ciudad">Mostrar</button>
-      <div id="horaCiudad" class="alert alert-info mt-2">Hora actual: --:--:--</div>
-    </div>
-
-    <!-- Notas -->
-    <div class="card p-3">
-      <h4>📝 Notas</h4>
-      <form id="noteForm" class="mb-2">
-        <input type="text" id="noteTitle" class="form-control mb-2" placeholder="Título" required
-          aria-label="Título de la nota" />
-        <textarea id="noteContent" class="form-control mb-2" rows="2" placeholder="Contenido" required
-          aria-label="Contenido de la nota"></textarea>
-        <button type="submit" class="btn btn-primary btn-block" aria-label="Guardar nota">Guardar</button>
-      </form>
-      <div id="notesList" class="list-group"></div>
-    </div>
-
-    <!-- Cuenta regresiva -->
-    <div class="card p-3">
-      <h4>⏰ Salida del Trabajo</h4>
-      <input type="time" id="hourInput" class="form-control mb-2" aria-label="Hora de salida" />
-      <button class="btn btn-warning btn-block" onclick="startCountdown()" aria-label="Iniciar cuenta regresiva">Iniciar
-        Cuenta Regresiva</button>
-      <div id="countdown" class="alert alert-success text-center">00:00:00</div>
-    </div>
-  </div>
   </div>
 
   <!-- Juego de Globos -->
@@ -154,8 +158,5 @@
     aria-label="Cambiar modo de tema">Modo Claro</button>
   <script src="script.js" defer></script>
 </body>
-<footer class="site-footer text-center py-4">
-  <p class="mb-0">© 2025 FERNANDO VARGAS - Desarrollador Web</p>
-</footer>
 
 </html>
