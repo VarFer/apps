@@ -252,7 +252,7 @@ th {
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 10px;
-  background-color: #141313;
+  background-color: #080808;
   text-align: center;
 }
 
@@ -286,3 +286,4 @@ input {
   font-size: 1em;
   width: 150px;
 }
+

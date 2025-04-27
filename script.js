@@ -18,6 +18,7 @@ function actualizarCronometro() {
     `${pad(horas)}:${pad(minutos)}:${pad(segundos)}`;
 }
 
+
 document.getElementById("startCrono").addEventListener("click", () => {
   if (!cronometroInterval) {
     cronometroInterval = setInterval(() => {
