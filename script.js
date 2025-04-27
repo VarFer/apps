@@ -6,6 +6,75 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
+// ========== ⏲️ CRONÓMETRO ========== //
+let cronometroInterval;
+let cronoSegundos = 0;
+
+function actualizarCronometro() {
+  const horas = Math.floor(cronoSegundos / 3600);
+  const minutos = Math.floor((cronoSegundos % 3600) / 60);
+  const segundos = cronoSegundos % 60;
+  document.getElementById("cronometro").textContent = 
+    `${pad(horas)}:${pad(minutos)}:${pad(segundos)}`;
+}
+
+document.getElementById("startCrono").addEventListener("click", () => {
+  if (!cronometroInterval) {
+    cronometroInterval = setInterval(() => {
+      cronoSegundos++;
+      actualizarCronometro();
+    }, 1000);
+  }
+});
+
+document.getElementById("stopCrono").addEventListener("click", () => {
+  clearInterval(cronometroInterval);
+  cronometroInterval = null;
+});
+
+document.getElementById("resetCrono").addEventListener("click", () => {
+  clearInterval(cronometroInterval);
+  cronometroInterval = null;
+  cronoSegundos = 0;
+  actualizarCronometro();
+});
+
+actualizarCronometro();
+
+// ========== ⏳ TEMPORIZADOR ========== //
+let temporizadorInterval;
+let temporizadorSegundos = 0;
+
+document.getElementById("startTemporizador").addEventListener("click", () => {
+  temporizadorSegundos = parseInt(document.getElementById("temporizadorInput").value, 10);
+
+  if (isNaN(temporizadorSegundos) || temporizadorSegundos <= 0) {
+    document.getElementById("temporizador").textContent = "00:00";
+    alert("Por favor, ingresa un valor válido.");
+    return;
+  }
+
+  clearInterval(temporizadorInterval); // Reiniciar si ya hay un temporizador corriendo
+  temporizadorInterval = setInterval(() => {
+    if (temporizadorSegundos > 0) {
+      temporizadorSegundos--;
+      const minutos = Math.floor(temporizadorSegundos / 60);
+      const segundos = temporizadorSegundos % 60;
+      document.getElementById("temporizador").textContent = 
+        `${pad(minutos)}:${pad(segundos)}`;
+    } else {
+      clearInterval(temporizadorInterval);
+      document.getElementById("temporizador").textContent = "¡Tiempo terminado!";
+    }
+  }, 1000);
+});
+
+// ========== FUNCION PAD PARA FORMATO ==========
+function pad(num) {
+  return num < 10 ? "0" + num : num;
+}
+
+
 // ========== 🔄 CONVERSOR DE UNIDADES ========== //
 const unidades = {
   metrico: { "metros": 1, "kilómetros": 0.001, "centímetros": 100, "milímetros": 1000 },
